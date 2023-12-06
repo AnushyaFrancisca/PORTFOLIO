@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Anushya Francisca's Portfolio</title>
+
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Poppins);
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+      border: none;
+      outline: none;
+      scroll-behavior: smooth;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+      margin: 0;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      color: white;
+      font-family: 'Courier New', monospace;
+      transition: opacity 5s ease, background-color 5s ease;
+      /* Adjust transition duration and timing function as needed */
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 10 rem 7% 2rem;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    #image-container {
+      position: absolute;
+      width: 100%;
+      bottom: 27px;
+      left: 850px;
+      display: flex;
+      /* padding-left: 890px;
+            padding-bottom: 2000px; */
+      align-items: center;
+      height: 100%;
+    }
+
+    #image-container img {
+      display: block;
+      border-radius: 40%;
+
+    }
+
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #000;
+      padding: 30px 100px;
+      display: flex;
+      box-sizing: border-box;
+      justify-content: space-evenly;
+      z-index: 10;
+    }
+
+    #navbar a {
+      position: relative;
+      font-weight: 1.7rem;
+      text-decoration: none;
+      color: white;
+      padding: 6px 15px;
+      border-radius: 20px;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    #navbar a.active::before {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: .2rem;
+      background-color: white;
+
+    }
+
+    #navbar a:hover {
+      background: white;
+      color: black;
+    }
+
+    #skills {
+      text-align: center;
+      padding: 50px 0;
+      /* Adjust the padding as needed */
+    }
+
+    #skills h2 {
+      margin-bottom: 20px;
+      /* Set the margin to 0 or adjust as needed */
+    }
+
+    .animate span {
+      display: block;
+      position: relative;
+      text-align: center;
+    }
+
+    .about {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .sec p {
+      font-weight: 300;
+      padding: 30px;
+      max-width: 80rem;
+      font-size: 1.2rem;
+      text-align: justify;
+      background: linear-gradient(to right, rgb(6, 17, 86), purple);
+      border-radius: 15px;
+      /* Add border-radius for a rounded appearance */
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      /* Add box shadow for depth */
+      color: white;
+      /* Text color */
+      margin-top: 45px;
+      /* Adjust top margin for spacing */
+      margin-bottom: 45px;
+      background-clip: padding-box;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1.2rem 2.8rem;
+      background-color: white;
+      border-radius: .6rem;
+      box-shadow: 0.2rem, .5rem, black;
+      font-size: 1.6rem;
+      color: rgb(5, 5, 83);
+      letter-spacing: .1rem;
+      font-weight: 600;
+      border: .2rem solid transparent;
+      transition: .5s ease;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: black;
+      border-color: black;
+    }
+
+    .academic .academic-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .academic-container .academic-box {
+      flex: 1 1 30rem;
+      background-color: rgb(69, 5, 69);
+      padding: 3rem 2rem 4rem;
+      border-radius: 1rem;
+      box-shadow: 0, 0.1rem, .5rem black;
+      text-align: center;
+      border-top: .6rem solid white;
+      border-bottom: .6rem solid white;
+      transition: .5s ease;
+    }
+
+    .academic-container .academic-box:hover {
+      box-shadow: 0 .1rem 2rem white;
+      transform: scale(1.02);
+    }
+
+
+
+    .academic-box p {
+      font-size: 0.8rem;
+      margin: 1rem 0 3rem;
+    }
+
+    #text {
+      position: absolute;
+      font-size: 4cm;
+      padding-bottom: 100px;
+      color: white;
+      text-shadow: 2px 2px 4px rgb(0, 0, 0, .2);
+    }
+
+    #about img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .animate.backwards>span {
+      animation: animateBackwards 1s ease-in-out forwards;
+    }
+
+    .animate.forwards>span {
+      animation: animateForwards 1s ease-in-out forwards;
+    }
+
+    .animate.mixed>span:nth-child(even) {
+      animation: animateBackwards 1s ease-in-out forwards;
+    }
+
+    .animate.mixed>span:nth-child(odd) {
+      animation: animateForwards 1s ease-in-out forwards;
+    }
+
+    @keyframes animateForwards {
+      from {
+        top: 0;
+        transform: rotate(0deg);
+      }
+
+      to {
+        top: .9em;
+        transform: rotate(-15deg);
+      }
+    }
+
+    @keyframes animateBackwards {
+      from {
+        top: 0;
+        transform: rotate(0deg);
+      }
+
+      to {
+        top: 1em;
+        transform: rotate(25deg);
+      }
+    }
+
+    .container {
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1000px;
+      height: 600px;
+      padding: 50px;
+      background-color: #f5f5f5;
+      box-shadow: 0 30px 50px #dbdbdb;
+    }
+
+    #slide {
+      width: max-content;
+      margin-top: 50px;
+    }
+
+    .item {
+      width: 200px;
+      height: 300px;
+      background-position: 50% 50%;
+      display: inline-block;
+      transition: 0.5s;
+      background-size: cover;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      transform: translate(0, -50%);
+      border-radius: 20px;
+      box-shadow: 0 30px 50px #505050;
+    }
+
+    .item:nth-child(1),
+    .item:nth-child(2) {
+      left: 0;
+      top: 0;
+      transform: translate(0, 0);
+      border-radius: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: none;
+    }
+
+    .item:nth-child(3) {
+      left: 50%;
+    }
+
+    .item:nth-child(4) {
+      left: calc(50% + 220px);
+    }
+
+    .item:nth-child(5) {
+      left: calc(50% + 440px);
+    }
+
+    .item:nth-child(n+6) {
+      left: calc(50% + 660px);
+      opacity: 0;
+    }
+
+    .item .content {
+      font-weight: 800;
+      position: absolute;
+      top: 50%;
+      left: 100px;
+      width: 300px;
+      text-align: left;
+      padding: 0;
+      color: #eee;
+      transform: translate(0, -50%);
+      display: none;
+      font-family: system-ui;
+    }
+
+    .item:nth-child(2) .content {
+      display: block;
+      z-index: 11111;
+    }
+
+    .item .name {
+      font-size: 40px;
+      font-weight: bold;
+      opacity: 0;
+      animation: showcontent 1s ease-in-out 1 forwards
+    }
+
+    .item .des {
+      margin: 20px 0;
+      opacity: 0;
+      animation: showcontent 1s ease-in-out 0.3s 1 forwards
+    }
+
+    .item button {
+      padding: 10px 20px;
+      border: none;
+      opacity: 0;
+      animation: showcontent 1s ease-in-out 0.6s 1 forwards
+    }
+
+    @keyframes showcontent {
+      from {
+        opacity: 0;
+        transform: translate(0, 100px);
+        filter: blur(33px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(0, 0);
+        filter: blur(0);
+      }
+    }
+
+    .buttons {
+      position: absolute;
+      bottom: 30px;
+      z-index: 222222;
+      text-align: center;
+      width: 100%;
+    }
+
+    .buttons button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid #555;
+      transition: 0.5s;
+    }
+
+    .buttons button:hover {
+      background-color: #bac383;
+    }
+
+    .contact-container {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      max-width: 400px;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    @keyframes scaleUp {
+      0% {
+        transform: scale(0);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .success-message {
+      color: #4caf50;
+      font-weight: bold;
+      animation: scaleUp 0.5s ease;
+    }
+
+    .error-message {
+      color: #f44336;
+      font-weight: bold;
+      animation: scaleUp 0.5s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="glitch-cli"></canvas>
+
+  <div id="navbar">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About Me</a>
+    <a href="#acadeic">Academic Background</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <section id="home">
+    <h3 style="padding-left: 230px; padding-top: 240px; font-size: 1.8rem; font-weight: 700; line-height: .3;">
+      Hello, I'm </h3>
+    <h1 style="padding-left: 230px; padding-top: 3px; font-size: 3.0rem; font-weight: 700;">Anushya Francisca</h1>
+    <p
+      style="align-items: center; padding-left: 230px; padding-top: 10px; max-width: 60rem; font-size: 0.8rem; text-align: justify;">
+      I
+      am currently pursuing my Masters in Data Science at Christ
+      Deemed to be University, where my fervent passion for the field is met with a relentless pursuit of
+      knowledge and skill refinement. Through rigorous academic endeavors and hands-on projects, I have cultivated
+      a deep understanding of data science methodologies and technologies. As a dedicated learner, I am committed
+      to staying abreast of industry trends, and I am poised to contribute innovative solutions to the dynamic
+      landscape of data science. With a focus on delivering tangible results, I am confident that my skills and
+      enthusiasm will bring valuable insights and perspectives to the professional realm, making a meaningful
+      impact on the ever-evolving field of data science.</p>
+
+
+    <div id="image-container">
+      <img src="img\IMG_2505.png" alt="Image" style="height:800px; width: 640px;">
+    </div>
+  </section>
+
+  <section class="about" style="background-color: white; color: black">
+    <img src="img\part.png" height="740px" width="1520px" style="position: absolute;" id="bg">
+    <h2 id="text">About Me</h2>
+    <img src="img\part1.png" style="position: relative;" height="740px" width="1520px" id="'move">
+    <!-- Content for the About Me section -->
+    <br>
+  </section>
+
+  <section class="sec">
+    <p
+      style="font-weight: 300; align-items: center; padding-left: 230px; padding-top: 10px; font-size: 1.2rem; text-align: justify;">
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      My journey has been a tapestry of diverse experiences, reflecting the rich cultural mosaic of my upbringing.
+      Born in Tamil Nadu, raised in Bangalore, and rooted in Telugu traditions with family business ties in
+      Kerala, I have embraced a myriad of cultures. My insatiable curiosity has driven me to explore and adapt to
+      various situations, transcending limitations and venturing into unfamiliar territories, including sports,
+      music, and leadership roles.
+      <br>
+      <br>
+      Approaching the world with an inquisitive mind, I am fueled by an unyielding passion for work, consistently
+      delivering my best in every endeavor. My affinity for complex problem-solving, mind games, and mathematics
+      has seamlessly translated into a career focused on data science, machine learning, and neural networks. This
+      journey reflects not only a commitment to continuous learning but also an unwavering dedication to
+      overcoming challenges. My diverse experiences and skillsets converge to form a unique foundation, shaping a
+      career trajectory that thrives on innovation and a relentless pursuit of excellence in the dynamic fields of
+      data science and machine learning.
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+
+    </p>
+  </section>
+
+  <section class="academic" id="academic">
+    <h2 class="heading" style="text-align: center; font-size: larger;"> <span
+        style="text-align: center;font-size: 2.3rem ;margin-top: 60px;"> My Academic Background</span></h2>
+    <br>
+    <br>
+    <br>
+    <div class="academic-container">
+      <div class="academic-box">
+        <h3>Bachelor's</h3>
+        <p>In pursuit of knowledge and driven by a profound curiosity, I embarked on my academic journey in the
+          hallowed halls of Christ University, Bangalore, where I delved into the realms of Physics,
+          Chemistry, and Mathematics. This multidisciplinary foundation laid the cornerstone for my insatiable
+          curiosity and analytical thinking.
+          <br>
+          <br>
+          The intricacies of Physics instilled in me a meticulous approach to problem-solving, fostering a
+          deep appreciation for understanding the underlying principles governing the natural world.
+          Chemistry, with its intricate structures and reactions, honed my attention to detail, teaching me
+          the importance of precision in every endeavor. Mathematics, the language of patterns and logic,
+          became a playground for my analytical mind, offering a structured approach to problem-solving.
+          <br>
+          This diverse academic background not only cultivated my analytical and problem-solving skills but
+          also instilled in me a holistic perspective that transcends disciplinary boundaries. The
+          intersection of these subjects ignited a passion for uncovering patterns and deciphering complex
+          systems, laying the groundwork for my transition into the dynamic field of Data Science.
+        </p>
+      </div>
+      <div class="academic-box">
+        <h3>Master's</h3>
+        <p>My academic journey took a transformative turn as I pursued my Master's in Data Science, a field at
+          the forefront of innovation and technological advancement. Here, I immersed myself in the world of
+          programming languages, with Python emerging as the linchpin of my technical repertoire. Through
+          hands-on experiences, I honed my skills in HTML, delved into the intricacies of Database Management
+          Systems (DBMS), and navigated the complexities of various algorithms.
+
+          The Master's program not only provided me with a robust theoretical foundation but also equipped me
+          with practical, industry-relevant skills. The fusion of theoretical knowledge and practical
+          application empowered me to tackle real-world challenges in the realm of data. From crafting
+          efficient algorithms to utilizing DBMS for seamless data management, I gained a multifaceted skill
+          set that positions me as a versatile and adept professional in the field of Data Science.
+
+          The synergy between my bachelor's and master's degrees is evident in my journey—from the
+          foundational curiosity sparked by Physics, Chemistry, and Mathematics to the specialized skills and
+          knowledge acquired in Data Science. This unique blend has not only shaped my academic trajectory but
+          has also sculpted me into a candidate with a diverse skill set, ready to contribute innovative
+          solutions to the evolving landscape of data-driven insights.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2 style="text-align: center;font-size: 2.3rem;">Skillset</h2>
+    <div class="container">
+      <div id="slide">
+        <div class="item"
+          style="background-image: url(https://i.pinimg.com/564x/12/23/9e/12239e7a26af753cea461b0733ab25fb.jpg);">
+          <div class="content">
+            <div class="name">Programming Language</div>
+            <div class="des">In my educational journey, I showcase a profound proficiency in Python, a
+              cornerstone language in the data science community. My ability to harness Python's
+              capabilities for data manipulation, analysis, and machine learning underscores my
+              versatility. Additionally, I bring forth skills in R for specialized tasks in statistical
+              analysis and data visualization, adding a layer of diversity to my language proficiency.
+            </div>
+
+          </div>
+        </div>
+        <div class="item"
+          style="background-image: url(https://i.pinimg.com/564x/17/cb/f0/17cbf0204482055425e17a5015a3c9a9.jpg);">
+          <div class="content">
+            <div class="name">Data Analysis & Visualisation</div>
+            <div class="des">Expertise in Pandas for nuanced data manipulation and analysis is a key
+              highlight in my skill set. The application of Pandas, coupled with skills in numerical
+              computing using NumPy, allows me to transform and analyze data effectively, forming a
+              crucial part of my data science toolkit.
+              Creating insightful visualizations is a forte, and I leverage libraries like Matplotlib and
+              Seaborn for static visualizations. Moreover, I extend my capabilities to Plotly and Tableau
+              for crafting interactive and engaging visual narratives that communicate complex insights
+              with clarity.
+            </div>
+
+          </div>
+        </div>
+
+        <div class="item"
+          style="background-image: url(https://i.pinimg.com/236x/71/53/42/71534272bed1723803fe85452b147ecf.jpg);">
+          <div class="content">
+            <div class="name">Soft skills</div>
+            <div class="des">Effective communication of technical concepts and seamless collaboration within
+              multidisciplinary teams are intrinsic aspects of my skill set. These soft skills complement
+              my technical prowess, making me an effective team player.</div>
+
+          </div>
+        </div>
+        <div class="item"
+          style="background-image: url(https://i.pinimg.com/564x/3b/79/d1/3b79d11f974a61b66f5b762525e663e2.jpg);">
+          <div class="content">
+            <div class="name">Collaboration and Communications</div>
+            <div class="des">Using Jupyter Notebooks, I create interactive and shareable documentation,
+              facilitating collaborative work. Additionally, my presence on GitHub serves as a testament
+              to my collaborative efforts and project documentation skills.</div>
+
+          </div>
+        </div>
+        <div class="item"
+          style="background-image: url(https://i.pinimg.com/236x/eb/2a/1c/eb2a1cb4f3434090101a153664dc7be9.jpg);">
+          <div class="content">
+            <div class="name">Problem Solving and Critical Thinking</div>
+            <div class="des">I showcase a track record of approaching complex problems with a systematic and
+              critical mindset, deriving actionable insights that contribute to project success.</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="prev"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="next"><i class="fa-solid fa-angle-right"></i></button>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="contact">
+    <div id="contact-container">
+      <br>
+      <br>
+      <br>
+
+      <h2 style="text-align: center; font-size: 2.3rem;">Contact Me</h2>
+      <form id="contactForm">
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+        <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
+        <button type="button" onclick="submitForm()">Send Message</button>
+      </form>
+      <p class="success-message" id="successMessage" style="display: none;">Message sent successfully!</p>
+      <p class="error-message" id="errorMessage" style="display: none;">Error sending message. Please try again.</p>
+    </div>
+  </section>
+
+
+  <script>
+    const canvas = document.getElementById('glitch-cli');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const glitchDuration = 3000; // Milliseconds glitch duration
+    const fadeDuration = 5000; // Milliseconds fade duration
+    const codeInterval = 100; // Milliseconds between code appearances
+    const codeOpacityMin = 0.3; // Minimum opacity for the code
+    const codeOpacityMax = 0.9; // Maximum opacity for the code
+    const codeSizeMin = 10; // Minimum font size for the code
+    const codeSizeMax = 25; // Maximum font size for the code
+
+    document.getElementById('next').onclick = function () {
+      let lists = document.querySelectorAll('.item');
+      document.getElementById('slide').appendChild(lists[0]);
+    }
+    document.getElementById('prev').onclick = function () {
+      let lists = document.querySelectorAll('.item');
+      document.getElementById('slide').prepend(lists[lists.length - 1]);
+    }
+
+    function submitForm() {
+      // Perform form submission logic here (you can use AJAX to send data to a server)
+      // For demonstration purposes, we'll show success and error messages
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+
+      // Simulate success or error based on a condition (replace with your logic)
+      const isSuccess = Math.random() > 0.5;
+
+      if (isSuccess) {
+        successMessage.style.display = 'block';
+        errorMessage.style.display = 'none';
+      } else {
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'block';
+      }
+    }
+
+    window.addEventListener("load", function () {
+      var delay = 2;
+      var nodes = document.querySelectorAll
+        (".animate");
+      for (var i = 0; i < nodes.length; i++) {
+        var words = nodes[i].innerText.split(" ");
+        nodes[i].innerHTML = "";
+        for (var i2 = 0; i2 < words.length; i2++) {
+          var item = document.createElement("span");
+          item.innerText = words[i2];
+          var calc = (delay + ((nodes.length + i2) / 3));
+          item.style.animationDelay = calc + "s";
+          nodes[i].appendChild(item);
+        }
+      }
+    });
+
+
+    function drawGlitchCLI() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'green';
+      ctx.font = 'monospace';
+
+      for (let i = 0; i < canvas.width; i += Math.random() * 150 + 100) {
+        for (let j = 0; j < canvas.height; j += Math.random() * 150 + 100) {
+          const glitchCode = generateRandomCode();
+          const codeOpacity = Math.random() * (codeOpacityMax - codeOpacityMin) + codeOpacityMin;
+          const codeSize = Math.random() * (codeSizeMax - codeSizeMin) + codeSizeMin;
+
+          ctx.globalAlpha = codeOpacity;
+          ctx.font = `${codeSize}px monospace`;
+          ctx.fillText(glitchCode, i, j);
+        }
+      }
+
+      ctx.globalAlpha = 1; // Reset global alpha
+    }
+
+    function generateRandomCode() {
+      const codeLines = [
+        'public class ComplicatedAlgorithm {',
+        '    private static final int MAX_ITERATIONS = 1000;',
+        '    private static double calculateComplexity(int input) {',
+        '        double result = 0.0;',
+        '        for (int i = 0; i < MAX_ITERATIONS; i++) {',
+        '            result += Math.sin(Math.sqrt(input)) * Math.log(i + 1);',
+        '        }',
+        '        return result;',
+        '    }',
+        '    public static void main(String[] args) {',
+        '        int inputValue = 42;',
+        '        double complexityResult = calculateComplexity(inputValue);',
+        '        System.out.println("Complexity result: " + complexityResult);',
+        '    }',
+        '}',
+      ];
+
+      return codeLines[Math.floor(Math.random() * codeLines.length)];
+    }
+
+    function decreaseOpacity() {
+      const intervalId = setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha -= 0.01;
+
+        if (ctx.globalAlpha <= 0) {
+          clearInterval(intervalId);
+          canvas.style.display = 'none';
+          document.body.style.backgroundColor = 'black';
+        }
+      }, fadeDuration / 100);
+    }
+
+    setInterval(() => {
+      drawGlitchCLI();
+      setTimeout(() => {
+        drawGlitchCLI();
+        decreaseOpacity();
+      }, glitchDuration);
+    }, codeInterval);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawGlitchCLI();
+    });
+
+
+  </script>
+
+</body>
+
+</html>
